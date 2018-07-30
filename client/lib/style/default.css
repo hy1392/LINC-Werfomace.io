@@ -35,6 +35,7 @@ body{
   position: relative;
   top: -3px;
   margin-left: 480px;
+  cursor: pointer;
 }
 
 .nav-btn-group{
@@ -42,8 +43,7 @@ body{
 }
 
 .nav-btn{
-  margin: 26px 0;
-  padding : 0 20px;
+  padding : 26px 20px;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -51,6 +51,14 @@ body{
   font-size: 14px;
   text-decoration:none;
   outline:none !important;
+}
+
+.slice{
+  border-right : 1px solid black;
+  height: 16px;
+  display: inline-block;
+  position: relative;
+  top: 2px;
 }
 
 .border-right-1px{
@@ -157,6 +165,16 @@ body{
   position: absolute;
   left: 1240px;
   cursor: pointer;
+}
+
+.search-btn:active{
+  background:#585D5E;
+  color: white;
+  border : 1px solid white;
+}
+
+.search-btn:active > img{
+  content: url("/images/ico_arrow_w@2x.png");
 }
 
 .search-btn > *{
