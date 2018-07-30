@@ -1,36 +1,11 @@
 <template name="mainTopBar">
-  mainTopBar
-    <!-- <div class="row margin-0 justify-content-center topbar-border">
-        <div class="topbar-container row align-items-center margin-0">
-            <div class=""><a href="/"><img src="images/index/logo.gif" alt="" class="topbar-img"></a></div>
-            <div class="topbar-desc">
-                <div class="float-right">
-                    {{#if currentUser}}
-                        <div class="topbar-a">
-                            <a href="/learningStatus" class="topbar-register">마이 페이지</a>
-                        </div>
-                        <div class="topbar-a">
-                            <a href="/classList" class="topbar-login">학습 페이지</a>
-                        </div>
-                        <div class="topbar-a">
-                            <a href="/codeTest" class="topbar-login">샘플 코드</a>
-                        </div>
-                        <div class="topbar-a">
-                            <a href="" class="topbar-findIdPw logout">로그아웃</a>
-                        </div>
-                        {{else}}
-                        <div class="topbar-a">
-                            <a href="/register" class="topbar-register">회원가입</a>
-                        </div>
-                        <div class="topbar-a">
-                            <a href="/login" class="topbar-login">로그인</a>
-                        </div>
-                        <div class="topbar-a">
-                            <a href="/findID" class="topbar-findIdPw">아이디 · 비밀번호 찾기</a>
-                        </div>
-                    {{/if}}
-                </div>
-            </div>
-        </div>
-    </div> -->
+  <div class="nav align-items-center">
+    <div class="pull-left">
+      <img src="/images/logo@2x.png" alt="" class="nav-logo">
+    </div>
+    <div class="nav-btn-group pull-right">
+      <button type="button" name="button" class="nav-btn border-right-1px">로그인</button>
+      <button type="button" name="button" class="nav-btn">회원가입</button>
+    </div>
+  </div>
 </template>
