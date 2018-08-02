@@ -1,5 +1,5 @@
-// import { Meteor } from 'meteor/meteor';
-// import { Accounts } from 'meteor/accounts-base';
+import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 //
 // if (Meteor.isClient) {
 //     //회원가입

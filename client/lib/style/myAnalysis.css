@@ -1,0 +1,147 @@
+.analysis-container{
+  width: 880px;
+  height: auto;
+  margin: 0 0 0 10px;
+}
+
+.analysis-container > table{
+  width: 880px;
+}
+
+.analysis-title{
+  width: 880px;
+  height: 40px;
+  background: #F8F8F8;
+  font-family: "Arial";
+  font-size: 14px;
+  font-weight: bold;
+  color: #555555;
+}
+
+.analysis-title > th:nth-child(1){
+  width: 438px;
+  padding-left: 14px;
+}
+
+.analysis-title > th:nth-child(2){
+  width: 125px;
+  padding-left: 14px;
+}
+
+.analysis-title > th:nth-child(3){
+  width: 45px;
+  text-align: center;
+}
+
+.analysis-title > th:nth-child(4){
+  width: 45px;
+  text-align: center;
+}
+
+.analysis-title > th:nth-child(5){
+  width: 45px;
+  text-align: center;
+}
+
+.analysis-title > th:nth-child(6){
+  width: 100px;
+  text-align: center;
+}
+
+.analysis-title > th:nth-child(7){
+  width: 82px;
+  padding-right: 21px;
+  text-align: center;
+}
+
+.analysis-title > th:nth-child(8){
+  width: 17px;
+}
+
+.analysis-item-container{
+  height: 630px;
+  overflow-y: scroll;
+}
+
+.analysis-item{
+  height: 40px;
+  font-family: "Arial";
+  font-size: 14px;
+  color: #555555;
+}
+
+.analysis-item > td > button{
+  width: 24px;
+  height: 24px;
+}
+
+.analysis-item > td:nth-child(1){
+  width: 438px;
+  padding-left: 14px;
+}
+
+.analysis-item > td:nth-child(1) > a{
+  text-decoration: none;
+  color: #555555;
+}
+
+.analysis-item > td:nth-child(2){
+  width: 125px;
+  padding-left: 14px;
+}
+
+.analysis-item > td:nth-child(3){
+  width: 45px;
+  text-align: center;
+}
+
+.analysis-item > td:nth-child(4){
+  width: 45px;
+  text-align: center;
+}
+
+.analysis-item > td:nth-child(5){
+  width: 45px;
+  text-align: center;
+}
+
+.analysis-item > td:nth-child(3) > button, td:nth-child(4) > button, td:nth-child(5) > button{
+  background:url("/images/btn_down@2x.png");
+  border: none;
+  cursor: pointer;
+}
+
+.analysis-item > td:nth-child(3) > button:hover, td:nth-child(4) > button:hover, td:nth-child(5) > button:hover{
+  background:url("/images/btn_down_hover.png");
+}
+
+.analysis-item > td:nth-child(6){
+  width: 100px;
+  text-align: center;
+}
+
+.analysis-item > td:nth-child(6) > button{
+  background:url("/images/btn_look@2x.png");
+  border: none;
+  cursor: pointer;
+}
+
+.analysis-item > td:nth-child(6) > button:hover{
+  background:url("/images/btn_look_hover.png");
+}
+
+.analysis-item > td:nth-child(7){
+  width: 82px;
+  padding-right: 21px;
+  text-align: center;
+}
+
+.analysis-item > td:nth-child(7) > button{
+  background:url("/images/btn_delete@2x.png");
+  border: none;
+  cursor: pointer;
+}
+
+.analysis-item > td:nth-child(7) > button:hover{
+  background:url("/images/btn_delete_hover.png");
+}

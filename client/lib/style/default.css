@@ -5,6 +5,20 @@
   margin: auto;
 }
 
+.content-border{
+  width: 1920px;
+  height: auto;
+  border-left: 1px solid #D2D2D2;
+  border-right: 1px solid #D2D2D2;
+}
+
+.default-inner-container{
+  width: 900px;
+  height: auto;
+  margin: auto;
+  padding: 40px 0 56px 0;
+}
+
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #9E9E9E;
     opacity: 1; /* Firefox */
@@ -19,14 +33,42 @@
 }
 
 body{
-  background: #eee;
+  background: white;
 }
+
+.page-title{
+  font-family: "Arial";
+  font-weight : bold;
+  font-size: 24px;
+  margin : 0 0 30px 10px;
+}
+
+/* width */
+/* ::-webkit-scrollbar {
+    width: 8px;
+} */
+
+/* Track */
+/* ::-webkit-scrollbar-track {
+    background: #F5F5F5;
+} */
+
+/* Handle */
+/* ::-webkit-scrollbar-thumb {
+    background: #BBBBBB;
+} */
+
+/* Handle on hover */
+/* ::-webkit-scrollbar-thumb:hover {
+    background: #b1afaf;
+} */
 
 /* nav */
 .nav{
   height: 70px;
   width: 1920px;
-  border:1px solid #D2D2D2;
+  /* border:1px solid #D2D2D2; */
+  border-bottom:1px solid #D2D2D2;
   justify-content: space-between;
   background : white;
 }
@@ -194,8 +236,6 @@ body{
   width: 1920px;
   height: 502px;
   background : white;
-  border-left:1px solid #D2D2D2;
-  border-right:1px solid #D2D2D2;
 }
 
 .index-inner-block{

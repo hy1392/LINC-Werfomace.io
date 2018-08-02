@@ -1,1 +1,13 @@
+import '/client/Components/defaultTemplate.html';
+import '/client/Components/index.html';
+import '/client/Components/mainFooter.html';
+import '/client/Components/mainTopBar.html';
+import '/client/Components/account/findId.html';
+import '/client/Components/account/findPw.html';
+import '/client/Components/account/login.html';
+import '/client/Components/account/register.html';
+import '/client/Components/analysis/analysisDetail.html';
+import '/client/Components/analysis/myAnalysis.html';
+import '/client/Components/myPage/modifyMyInfo.html';
+import '/client/Components/myPage/myInfo.html';
 import '/imports/startup/client';
