@@ -1,0 +1,62 @@
+.login-page {
+	margin: 0;
+	padding: 0;
+}
+
+.login-text {
+	margin: 40px 1328px 0px 520px;
+	width: 72px;
+	height: 32px;
+	font-size: 24px;
+}
+
+.login-img {
+	display: block;
+	margin: 45px auto 41px auto;
+}
+
+.box {
+	width: 960px;
+	height: 292px;
+	background-color: #F8F8F8;
+}
+
+.user_name, .user_pass {
+	width: 440px;
+	height: 40px;
+	margin-left: 250px;
+	font-family: "Arial";
+	font-size: 14px;
+	padding: 11px 0 11px 18px;
+}
+
+.user_name {
+	margin-top: 29px;
+	margin-bottom: 16px;
+}
+
+.user_pass {
+	margin-bottom: 21px;
+}
+
+.box a {
+	font-family:"Arial";
+	color: #555;
+	font-size: 14px;
+	text-align: left;
+	text-decoration: none;
+}
+
+.active-text {
+	margin: 0 0 47px 250px;
+}
+
+.login-btn {
+	width: 440px;
+	height: 50px;
+	margin: 0px 270px 31px 250px;
+}
+
+.margin-lr-12{
+  margin: 0 12px;
+}
