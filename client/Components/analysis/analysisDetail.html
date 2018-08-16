@@ -1,3 +1,46 @@
 <template name="analysisDetail">
-analysisDetail
+  <div class="default-inner-container">
+    <p class="page-title">분석결과 상세보기</p>
+    <div class="analysis-container">
+      <div class="">
+        <p>성능</p>
+      </div>
+      <div class="test-row">
+        <p>1. 화면 밖 이미지 로드 지연</p>
+        <div class="graph"></div>
+        <p>3.59s</p>
+      </div>
+      <div class="test-row">
+        <p>2. 렌더링 차단 리소스 제거</p>
+        <div class="graph"></div>
+        <p>2.69s</p>
+      </div>
+      <div class="test-row">
+        <p>3. 적당한 사이즈의 이미지 배치</p>
+        <div class="graph"></div>
+        <p>1.91s</p>
+        <p class="tip">JPEG2000, JPEG XR 및 WebP와 같은 이미지 형식은 PNG 또는 JPEG보다 압축률이 높기 떄문에 다운로드 속도가 빠르고 데이터 소비량이 적습니다.</p>
+      </div>
+      <div class="test-row">
+        <p>4. 차세대 형식의 이미지 제공</p>
+        <div class="graph"></div>
+        <p>1.16s</p>
+      </div>
+      <div class="test-row">
+        <p>5. 사용하지 않는 CSS로드 지연</p>
+        <div class="graph"></div>
+        <p>0.6s</p>
+      </div>
+      <div class="test-row">
+        <p>6. 반복 통신 회피</p>
+        <div class="graph"></div>
+        <p>0.3s</p>
+      </div>
+      <div class="test-row">
+        <p>7. 서버 응답 시간을 낮게 유지(TTFB)</p>
+        <div class="graph"></div>
+        <p>0.05s</p>
+      </div>
+    </div>
+  </div>
 </template>

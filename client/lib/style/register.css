@@ -1,0 +1,135 @@
+.find-register-text {
+	margin: 40px 0 0 520px;
+}
+
+.rg_wrap_1, .rg_wrap_2 , .rg_wrap_3 {
+	padding-left: 730px;
+	padding-right: 750px;
+	font-size: 14px;
+	font-weight: bold;
+	font-family: "Arial";
+}
+
+.rg_wrap_1 input,
+.rg_wrap_2 input,
+.rg_wrap_3 input {
+	width: 440px;
+	height: 40px;
+	border: #9E9E9E solid 1px;
+	padding: 11px 0 11px 18px;
+}
+
+.rg_wrap_2 input:nth-of-type(2),
+.rg_wrap_2 input:nth-of-type(3) {
+	padding: 12px 0 12px 18px;
+}
+
+.rg_wrap_1 input:nth-of-type(1),
+.rg_wrap_1 input:nth-of-type(2),
+.rg_wrap_2 input:nth-of-type(1),
+.rg_wrap_2 input:nth-of-type(2) {
+	margin-bottom: 20px;
+}
+
+.rg_wrap_1 {
+	margin-top: 50px;
+}
+
+.rg_wrap_2 {
+	margin-top: 30px;
+	padding-top: 30px;
+	width: 1920px;
+	height: 372px;
+	background: #F8F8F8;
+}
+
+.rg_wrap_3 {
+	margin-top: 40px;
+	margin-bottom: 62px;
+}
+
+.rg-btn {
+	width: 440px;
+	height: 50px;
+}
+
+.gender-container {
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.gender-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    background-color: #FFFFFF;
+		border: 1px solid #9E9E9E;
+}
+
+.gender-container:hover input ~ .checkmark {
+    background-color: #FFFFFF;
+}
+
+.gender-container input:checked ~ .checkmark {
+    background-color: #FFFFFF;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.gender-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.gender-container .checkmark:after {
+    left: 6px;
+    top: 5px;
+    width: 9px;
+    height: 10px;
+    border: solid #226CB8;
+    border-width: 0 2.5px 2.5px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.gender-outter{
+
+}
+
+.gender-outter > label:nth-child(1){
+	display: block;
+	font-family:"Arial";
+	font-size:14px;
+	color:#555555;
+}
+
+.gender-outter > label:nth-child(2){
+	margin-right:30px;
+}
+
+.gender-outter > label:nth-child(2), .gender-outter > label:nth-child(3){
+	font-family:"Arial";
+	font-size:18px;
+	font-weight:normal;
+	color:#555555;
+}

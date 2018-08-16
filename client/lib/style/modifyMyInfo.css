@@ -1,0 +1,87 @@
+.find-modifyMyInfo-text {
+	margin: 40px 0 0 520px;
+}
+
+.m_wrap_1, .m_wrap_2 , .m_wrap_3 {
+	padding-left: 730px;
+	padding-right: 750px;
+	font-size: 14px;
+	font-weight: bold;
+	font-family: "Arial";
+}
+
+.m_wrap_2, .m_wrap_3 {
+	padding-left: 728px;
+}
+
+.m_wrap_1 input, 
+.m_wrap_2 input, 
+.m_wrap_3 input {
+	width: 440px;
+	height: 40px;
+	border: #9E9E9E solid 1px;
+	padding: 11px 0 11px 18px;
+}
+
+.m_wrap_2 input:nth-of-type(2),
+.m_wrap_2 input:nth-of-type(3) {
+	padding: 12px 0 12px 18px;
+}
+
+.m_wrap_1 input:nth-of-type(1),
+.m_wrap_1 input:nth-of-type(2),
+.m_wrap_2 input:nth-of-type(1),
+.m_wrap_2 input:nth-of-type(2) {
+	margin-bottom: 20px;
+}
+
+.m_wrap_1 label, 
+.m_wrap_2 label, 
+.m_wrap_3 label {
+	margin-bottom: 8px;
+}
+
+.m_wrap_1 {
+	margin-top: 50px;
+}
+
+.m_wrap_2 {
+	margin-top: 30px;
+	padding-top: 30px;
+	width: 1920px;
+	height: 372px;
+	background: #F8F8F8;
+}
+
+.m_wrap_3 {
+	margin-top: 30px;
+	margin-bottom: 61px;
+}
+
+.m_btn {
+	width: 440px;
+	height: 50px;
+}
+
+#m_user_grade {
+	float: left;
+	width: 300px;
+}
+
+.m_pay_btn {
+	/* display: inline-block; */
+	float: left;
+	width: 140px;
+	height: 40px;
+	padding: 11px 42px;
+	color: white;
+	font-size: 14px;
+	font-family: "Arial";
+	background-color: #226CB8;
+	border:none;
+}
+
+.m_wrap_3-1 {
+	margin-bottom: 40px;
+	width: 800px;
+}

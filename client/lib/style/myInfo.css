@@ -1,0 +1,54 @@
+.confirm-pass-text {
+	margin: 40px 0 0 520px;
+}
+
+.c-p-img {
+	width: 254px;
+	height: 176px;
+	margin: 144px 0 40px 833px;
+}
+
+.c-p-p {
+	margin: 0;
+	padding: 0;
+	margin-bottom: 20px;
+	margin-left: 666px;
+	font-size: 16px;
+	font-family: "Arial";
+	color:#555;
+}
+
+.c-p-wrap {
+	margin-left: 641px;
+	margin-bottom: 179px;
+	width: 640px;
+	height: 250px;
+	background-color: #f8f8f8;
+}
+
+.c-p-span,.c-p-text {
+	font-size: 16px;
+	font-weight: bold;
+	font-family: "Arial";
+	color:#555;
+	padding: 40px 0 8px 288px;
+	margin: 0;
+}
+
+.c-p-input {
+	margin-left: 100px;
+	margin-bottom: 51px;
+	color: #bbb;
+	font-size: 14px;
+	font-family: "Arial";
+	padding: 11px 123px;
+	width: 440px;
+	height: 40px;
+}
+
+.c-p-btn {
+	width: 440px;
+	height: 50px;
+	margin-bottom: 40px;
+	margin-left: 100px;
+}
