@@ -8,7 +8,7 @@ FlowRouter.route('/', {
 FlowRouter.notFound = {
     action: function() {
     alert("404!");
-    location.href="/";
+    FlowRouter.go("/")
   }
 };
 
@@ -39,7 +39,7 @@ FlowRouter.route('/findPw', {
 });
 
 //analysis
-FlowRouter.route('/analysisDetail', {
+FlowRouter.route('/analysisDetail/:dataId', {
     action: function() {
     BlazeLayout.render('defaultTemplate', {header:'mainTopBar', main:'analysisDetail',  footer:'mainFooter'});
   }

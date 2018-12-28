@@ -5,7 +5,7 @@
 
 	<div class="m_wrap_1">
 		<label for="m_user_id">아이디</label>
-		<input type="text" id="m_user_id" placeholder="아이디를 입력해주세요.">
+		<input type="text" id="m_user_id" placeholder="아이디를 입력해주세요." disabled value="{{get_id}}">
 
 		<label for="m_user_pass">비밀번호</label>
 		<input type="text" id="m_user_pass" placeholder="비밀번호를 입력해주세요.">
@@ -15,35 +15,43 @@
 	</div>
 	<div class="m_wrap_2">
 		<label for="m_user_name">이름</label>
-		<input type="text" id="m_user_name" placeholder="김철수">
+		<input type="text" id="m_user_name" placeholder="김철수" value="{{get_name}}">
 
 		<label for="m_user_birthDay">생년월일</label>
-		<input type="text" id="m_user_birthDay" placeholder="19XX.XX.XX">
+		<input type="text" id="m_user_birthDay" placeholder="19XX.XX.XX" value="{{get_birth}}">
 
 		<div class="gender-outter">
 			<label for="">성별</label>
 			<label class="gender-container">남성
-				<input type="checkbox">
+<input type="radio" value="male" name="gender" id="rg_user_gender" checked="{{check_gender male}}">
 				<span class="checkmark"></span>
 			</label>
 			<label class="gender-container">여성
-				<input type="checkbox">
+<input type="radio" value="female" name="gender" id="rg_user_gender" checked="{{check_gender female}}">
 				<span class="checkmark"></span>
 			</label>
 		</div>
 
 		<label for="m_user_email">이메일</label>
-		<input type="email" id="m_user_email" placeholder="email@gmail.com">
+		<input type="email" id="m_user_email" placeholder="email@gmail.com" value="{{get_email}}">
 	</div>
 
 	<div class="m_wrap_3">
 		<label for="m_user_grade">회원 등급</label>
 
 		<div class="m_wrap_3-1 clearfix">
-			<input type="email" id="m_user_grade" placeholder="무료">
+			<input type="email" id="m_user_grade" value="{{get_tier}}" disabled>
 			<button type="button" class="m_pay_btn">결제하기</button>
 		</div>
 
-		<button type="button" class="default-btn m_btn">가입하기</button>
+		<button type="button" class="default-btn m_btn">개인정보수정</button>
 	</div>
+
+	<script>
+	$('document').ready(function(){
+			$('.datepicker').datepicker({
+			format: 'yyyy-mm-dd',
+			});
+		})
+	</script>
 </template>
