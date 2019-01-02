@@ -1,3 +1,4 @@
+import {Session} from 'meteor/session';
 //default
 FlowRouter.route('/', {
     action: function() {
@@ -47,6 +48,7 @@ FlowRouter.route('/analysisDetail/:dataId', {
 
 FlowRouter.route('/myAnalysis', {
     action: function() {
+    if (Session.get('id') == null || Session.get('id') == undefined) FlowRouter.go("/")
     BlazeLayout.render('defaultTemplate', {header:'mainTopBar', main:'myAnalysis',  footer:'mainFooter'});
   }
 });
@@ -54,12 +56,14 @@ FlowRouter.route('/myAnalysis', {
 //myPage
 FlowRouter.route('/modifyMyInfo', {
     action: function() {
+    if (Session.get('id') == null || Session.get('id') == undefined) FlowRouter.go("/")
     BlazeLayout.render('defaultTemplate', {header:'mainTopBar', main:'modifyMyInfo',  footer:'mainFooter'});
   }
 });
 
 FlowRouter.route('/myInfo', {
     action: function() {
+    if (Session.get('id') == null || Session.get('id') == undefined) FlowRouter.go("/")
     BlazeLayout.render('defaultTemplate', {header:'mainTopBar', main:'myInfo',  footer:'mainFooter'});
   }
 });

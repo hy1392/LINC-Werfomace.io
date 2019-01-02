@@ -7,18 +7,70 @@ if(Meteor.isClient){
         return Session.get('id');
     })
     Template.modifyMyInfo.helpers({
-        get_id: Session.get('id'),
-        get_name: Session.get('name'),
-        get_email: Session.get('email'),
-        get_gender: Session.get('gender'),
-        get_birth: Session.get('birth'),
+        get_id(){return Session.get('id')},
+        get_name() {
+                return Session.get('name')},
+        get_email() {
+                return Session.get('email')},
+        get_gender() {
+                return Session.get('gender')},
+        get_birth() {
+                return Session.get('birth')},
         get_tier: function () {
             if (Session.get('tier')=='free') return "무료"
             else return "유료"
         },
-        check_gender: function(data){
-            if(data==Session.get('gender')) return "checked"
+        check_gender_male(){
+            if("male"==Session.get('gender')) return "checked"
+        },
+        check_gender_female() {
+            if ("female" == Session.get('gender')) return "checked"
         }
+    })
+
+    Template.modifyMyInfo.events({
+        'click .m_btn': function (event) {
+            event.preventDefault();
+            if ($("#m_user_pass").val() == "") {
+                alert("비밀번호를 입력해 주세요.")
+                return
+            }
+            if ($("#m_user_pass").val() === $("#m_user_pass_check").val()) {
+                let userData = {
+                    id: $("#m_user_id").val(),
+                    pw: $("#m_user_pass").val(),
+                    name: $("#m_user_name").val(),
+                    birth: $("#m_user_birthDay").val(),
+                    gender: $("#rg_user_gender").val(),
+                    email: $("#m_user_email").val(),
+                }
+                console.log(userData);
+                $.ajax({
+                    url: 'http://localhost:3001/account/update',
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify(userData),
+                    success: function (data) {
+                        if(data == "success"){
+                            alert("개인정보 수정이 완료되었습니다.")
+                            Session.set({
+                                id: userData.id,
+                                name: userData.name,
+                                email: userData.email,
+                                birth: userData.birth,
+                                gender: userData.gender,
+                            })
+                            FlowRouter.go("/")
+                        }
+                        else{
+                            alert("비밀번호가 틀렸습니다.")
+                        }
+                    }
+                })
+            } else {
+                alert("비밀번호와 비밀번호 확인이 같지 않습니다.");
+            }
+        },
     })
 
   

@@ -8,10 +8,10 @@
 		<input type="text" id="m_user_id" placeholder="아이디를 입력해주세요." disabled value="{{get_id}}">
 
 		<label for="m_user_pass">비밀번호</label>
-		<input type="text" id="m_user_pass" placeholder="비밀번호를 입력해주세요.">
+		<input type="password" id="m_user_pass" placeholder="비밀번호를 입력해주세요.">
 
 		<label for="m_user_pass_check">새 비밀번호 재확인</label>
-		<input type="text" id="m_user_pass_check" placeholder="비밀번호를 입력해주세요.">
+		<input type="password" id="m_user_pass_check" placeholder="비밀번호를 입력해주세요.">
 	</div>
 	<div class="m_wrap_2">
 		<label for="m_user_name">이름</label>
@@ -23,11 +23,11 @@
 		<div class="gender-outter">
 			<label for="">성별</label>
 			<label class="gender-container">남성
-<input type="radio" value="male" name="gender" id="rg_user_gender" checked="{{check_gender male}}">
+<input type="radio" value="male" name="gender" id="rg_user_gender" {{check_gender_male}}>
 				<span class="checkmark"></span>
 			</label>
 			<label class="gender-container">여성
-<input type="radio" value="female" name="gender" id="rg_user_gender" checked="{{check_gender female}}">
+<input type="radio" value="female" name="gender" id="rg_user_gender" {{check_gender_female}}>
 				<span class="checkmark"></span>
 			</label>
 		</div>
