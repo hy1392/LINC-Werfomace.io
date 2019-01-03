@@ -52,6 +52,13 @@ FlowRouter.route('/analysisDetail/:dataId', {
   }
 });
 
+FlowRouter.route('/analysisOverall/:dataId', {
+    action: function() {
+    checkLoginStatus()
+    BlazeLayout.render('defaultTemplate', {header:'mainTopBar', main:'analysisOverall',  footer:'mainFooter'});
+  }
+});
+
 FlowRouter.route('/myAnalysis', {
     action: function() {
     checkLoginStatus()

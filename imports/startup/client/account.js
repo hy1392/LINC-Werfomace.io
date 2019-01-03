@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
 import {Session} from 'meteor/session';
+import Chart from 'chart.js';
 
 if(Meteor.isClient){
     Template.registerHelper('check_session', function(){
@@ -274,7 +274,156 @@ Template.analysisDetail.rendered = function(){
     }
     console.log(userData)
     $(".analysis-container").html(`<iframe src="http://localhost:3001/analysis/getAnalysis/${userData._id}" frameborder="0" width="100%" height="2500px"></iframe>`)
+    $.ajax({
+        url: 'http://localhost:3001/analysis/getHistory',
+        type: 'post',
+        contentType: 'application/json',
+        data: JSON.stringify(userData),
+        success: function (data) {
+            console.log(data)
+            let graphData = [];
+            let graphColor = [];
+            let graphBorderColor = [];
+            let grade
+            data[0].score.split("-").forEach(element => {
+                graphData.push(element*100)
+            });
+            let graphSum = graphData.reduce((a, b) => a + b)
+            if (graphSum > 450) grade = "A"
+            else if (graphSum > 400) grade = "B"
+            else if (graphSum > 350) grade = "C"
+            else if (graphSum > 300) grade = "D"
+            else if (graphSum > 250) grade = "E"
+            else grade = "F"
+            $(".overall-grade").html(grade)
+            if(data.length>1){
+                let prevData = []
+                data[1].score.split("-").forEach(element => {
+                    prevData.push(element * 100)
+                });
+                let prevSum = prevData.reduce((a, b) => a + b)
+                if (graphSum - prevSum >= 0) $(".overall-score").html(`${graphSum}/500<span style='color:green'>(+${graphSum - prevSum})</span>`)
+                else $(".overall-score").html(`${graphSum}/500<span style='color:red'>(${graphSum - prevSum})</span>`)
+            }
+            else{
+                $(".overall-score").html(`${graphSum}/500`)
+            }
+            graphData.forEach(element => {
+                let color
+                if(element>=90) color = 'rgba(23,130,57,'
+                else if(element >= 50) color = 'rgba(230,119,0,'
+                else color = 'rgba(199,34,31,'
+                graphBorderColor.push(color+'1)')
+                graphColor.push(color+'0.3)')
+            })
+            new Chart($(".overall"),{
+                type:'bar',
+                data: {
+                    labels: [
+                        'performance',
+                        'pwa',
+                        'accessbility',
+                        'best-practices',
+                        'seo'
+                    ],
+                    datasets: [{
+                        label: 'Score',
+                        data: graphData,
+                        backgroundColor: graphColor,
+                        borderColor: graphBorderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    legend:{
+                        display:false
+                    }
+                },
+                scaleOverride: true,
+                scaleSteps: 10,
+                scaleStepWidth: 10,
+                scaleStartValue: 0
+            })
+
+            let graphLength = data.length
+            let reversedData = data.reverse()
+            let graphTitle = ['performance', 'pwa', 'accessbility', 'best-practices', 'seo']
+            let labesArr = [], dirArr = [], performanceScore = [], pwaScore = [], accessbilityScore = [], bestScore = [], seoScore = []
+            reversedData.forEach(element => {
+                let scores = element.score.split("-")
+                performanceScore.push(scores[0]*100)
+                pwaScore.push(scores[1] * 100)
+                accessbilityScore.push(scores[2] * 100)
+                bestScore.push(scores[3] * 100)
+                seoScore.push(scores[4] * 100)
+                labesArr.push(element.date)
+                dirArr.push(element.dir)
+            })
+            graphTitle.forEach(element => {
+                let canvasTitle = `.overall-${element}`
+                let canvas = $(canvasTitle)
+                let data
+                switch(element){
+                    case 'performance': data = performanceScore; break;
+                    case 'pwa': data = pwaScore; break;
+                    case 'accessbility': data = accessbilityScore; break;
+                    case 'best-practices': data = bestScore; break;
+                    case 'seo': data = seoScore; break;
+                }
+                new Chart(canvas, {
+                type:'line',
+                data: {
+                    labels: labesArr,
+                    datasets: [{
+                        label: 'Score',
+                        data: data,
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    legend:{
+                        display:false
+                    },
+                    'onClick' : (evt, item) => {
+                        try {
+                            FlowRouter.go(`/analysisDetail/${dirArr[item[0]._index]}`)
+                        } catch (error) {
+                            
+                        }
+                    }
+                },
+                scaleOverride: true,
+                scaleSteps: 10,
+                scaleStepWidth: 10,
+                scaleStartValue: 0
+            })
+            })
+        }
+    })
 }
+
+Template.analysisDetail.events({
+    'click .analysisDetail-tabs' : (evt) => {
+        let target = `.analysis-tab-${$(evt.target).attr('index')}`
+        $(".analysisDetail-tabs-active").removeClass("analysisDetail-tabs-active")
+        $(evt.target).addClass("analysisDetail-tabs-active")
+        $(".analysis-tabs").css("display", "none")
+        $(target).css("display", "block")
+    }
+})
 
 Template.myInfo.events({
     'click .c-p-btn': function (event) {

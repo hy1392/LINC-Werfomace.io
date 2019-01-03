@@ -1,0 +1,47 @@
+<template name="analysisOverall">
+    <div class="default-inner-container">
+        <p class="page-title">분석결과 상세보기</p>
+        <div class="overall-analysis-container analysis-tab-1">
+            <div>
+                <div>종합 분석 결과</div>
+                <p>최근 동일한 도메인에 대한 최대 10건의 종합 분석 결과를 확인할 수 있습니다. 그래프 점수를 클릭하여 상세 분석 페이지로 이동할 수 있습니다.</p>
+                <div>
+                    <div style="width:598px; height:198px; display:inline-block; border:1px solid #eee; padding:8px">
+                        <canvas class="overall" width="598" height="198"></canvas>
+                    </div>
+                    <div style="width:294px; height:198px; display:flex; border:1px solid #eee; float:right; align-items: center; justify-content: center">
+                        <div style="text-align:center">
+                            <p>종합 평가</p>
+                            <p class="overall-grade"></p>
+                            <p class="overall-score"></p>
+                        </div>
+                    </div>
+                    <p>성능(Performane) 추이</p>
+                    <div class="performance-detail" style="width:900px; height:300px; border: 1px solid #eee">
+                        <canvas class="overall-performance" width="598" height="198"></canvas>
+                    </div>
+                    <p>프로그레시브 웹 앱(Progressive Web App) 추이</p>
+                    <div class="pwa-detail" style="width:900px; height:300px; border: 1px solid #eee">
+                        <canvas class="overall-pwa" width="598" height="198"></canvas>
+                    </div>
+                    <p>접근성(Accessbility) 추이</p>
+                    <div class="accessbility-detail" style="width:900px; height:300px; border: 1px solid #eee">
+                        <canvas class="overall-accessbility" width="598" height="198"></canvas>
+                    </div>
+                    <p>모범 사례(Best Practices) 추이</p>
+                    <div class="best-practices-detail" style="width:900px; height:300px; border: 1px solid #eee">
+                        <canvas class="overall-best-practices" width="598" height="198"></canvas>
+                    </div>
+                    <p>검색 엔진 최적화(Search Engine Optimization) 추이</p>
+                    <div class="seo-detail" style="width:900px; height:300px; border: 1px solid #eee">
+                        <canvas class="overall-seo" width="598" height="198"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="analysis-container analysis-tab-2" style="display:none">
+
+        </div>
+    </div>
+</template>
