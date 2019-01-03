@@ -4,7 +4,38 @@ import {Session} from 'meteor/session';
 
 if(Meteor.isClient){
     Template.registerHelper('check_session', function(){
-        return Session.get('id');
+        return Session.get('status')
+    })
+    Template.modifyMyInfo.onRendered( function() {
+        fetch("http://localhost:3001/account/jwt", {
+                method: 'post',
+                mode: 'cors',
+                headers: {
+                    'x-access-token': localStorage.token
+                }
+            }).then(result => result.json())
+            .then(function (tokenData) {
+                let currentUser = {
+                    id : tokenData.id
+                }
+                $.ajax({
+                    url: 'http://localhost:3001/account/getUser',
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify(currentUser),
+                    success: function (data) {
+                        console.log(data)
+                        Session.set({
+                            id: data.id,
+                            name: data.name,
+                            birth: data.birth,
+                            gender: data.gender,
+                            email: data.email,
+                            tier: data.tier
+                        })
+                    }
+                })
+            })
     })
     Template.modifyMyInfo.helpers({
         get_id(){return Session.get('id')},
@@ -51,15 +82,10 @@ if(Meteor.isClient){
                     contentType: 'application/json',
                     data: JSON.stringify(userData),
                     success: function (data) {
-                        if(data == "success"){
+                        console.log(data)
+                        if(data.code == "success"){
+                            localStorage.token = data.token
                             alert("개인정보 수정이 완료되었습니다.")
-                            Session.set({
-                                id: userData.id,
-                                name: userData.name,
-                                email: userData.email,
-                                birth: userData.birth,
-                                gender: userData.gender,
-                            })
                             FlowRouter.go("/")
                         }
                         else{
@@ -120,6 +146,8 @@ if(Meteor.isClient){
                 gender: null,
                 tier:null
             })
+            localStorage.token="";
+            Session.set("status", null)
             FlowRouter.go("/")
         },
     });
@@ -142,14 +170,8 @@ Template.login.events({
             success: function (data) {
                 console.log(data);
                 if (data.code == "success") {
-                    Session.set({
-                        id:data.id,
-                        name:data.name,
-                        email:data.email,
-                        birth:data.birth,
-                        gender:data.gender,
-                        tier:data.tier
-                    })
+                    localStorage.token = data.token
+                    localStorage.status = "login"
                     FlowRouter.go('/');
                 } else if (data.code == "not found") {
                     alert("아이디 혹은 비밀번호가 틀렸습니다.")
@@ -214,26 +236,35 @@ Template.index.events({
             alert("분석을 진행할 사이트의 주소를 입력해 주세요(ex. https://www.google.com")
             return
         }
-        if(Session.get('id')!==null){
-            let userData = {
-                userId: Session.get('id'),
-                url: $(".search-url").val(),
-            }
-            console.log(userData);
-            $.ajax({
-                url: 'http://localhost:3001/analysis',
-                type: 'post',
-                contentType: 'application/json',
-                data: JSON.stringify(userData),
-                success: function (data) {
-                    alert("웹페이지 분석이 시작되었습니다. 나의 분석 결과 페이지로 이동하여 결과를 확인하세요")
+        fetch("http://localhost:3001/account/jwt", {
+                method: 'post',
+                mode: 'cors',
+                headers: {
+                    'x-access-token': localStorage.token
                 }
+            }).then(result => result.json())
+            .then(function (tokenData) {
+                if (tokenData.success == false) {
+                    alert('로그인 후 이용해 주세요.')
+                    FlowRouter.go("/login")
+                    return
+                }
+
+                let userData = {
+                    userId: tokenData.id,
+                    url: $(".search-url").val(),
+                }
+                console.log(userData);
+                $.ajax({
+                    url: 'http://localhost:3001/analysis',
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify(userData),
+                    success: function (data) {
+                        alert("웹페이지 분석이 시작되었습니다. 나의 분석 결과 페이지로 이동하여 결과를 확인하세요")
+                    }
+                })
             })
-        }
-        else{
-            alert("로그인 후 이용해 주세요.")
-            FlowRouter.go("/login")
-        }
     },
 });
 
@@ -247,56 +278,79 @@ Template.analysisDetail.rendered = function(){
 
 Template.myInfo.events({
     'click .c-p-btn': function (event) {
-        let userData = {
-            id: Session.get('id'),
-            pw: $(".c-p-input").val(),
-        }
-        console.log(userData);
-        $.ajax({
-            url: 'http://localhost:3001/account/checkPw',
-            type: 'post',
-            contentType: 'application/json',
-            data: JSON.stringify(userData),
-            success: function (data) {
-                console.log(data);
-                if (data == Session.get('id')) {
-                    FlowRouter.go("/modifyMyInfo");
-                } else if (data == "not found") {
-                    alert("비밀번호가 틀렸습니다.")
-                }
+        fetch("http://localhost:3001/account/jwt", {
+            method:'post',
+            mode: 'cors',
+            headers: {
+                'x-access-token': localStorage.token
             }
+        }).then(result => result.json())
+        .then(function (tokenData) {
+            let userData = {
+                // id: Session.get('id'),
+                id: tokenData.id,
+                pw: $(".c-p-input").val(),
+            }
+            console.log(userData);
+            $.ajax({
+                url: 'http://localhost:3001/account/checkPw',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(userData),
+                success: function (data) {
+                    console.log(data);
+                    if (data == tokenData.id) {
+                        FlowRouter.go("/modifyMyInfo");
+                    } else if (data == "not found") {
+                        alert("비밀번호가 틀렸습니다.")
+                    }
+                }
+            })
+        })
+        .catch(() => {
+            alert('로그인 정보가 잘못되었습니다. 다시 로그인 해주세요.')
+            FlowRouter.go("/")
         })
     },
 });
 
 Template.myAnalysis.events({
     'click .delete-analysis': function(e){
-        let userData = {
-            _id: $(e.target).attr("id"),
-        }
-        console.log(userData);
-        $.ajax({
-            url: 'http://localhost:3001/analysis/deleteAnalysisList',
-            type: 'post',
-            contentType: 'application/json',
-            data: JSON.stringify(userData),
-            success: function (data) {
-                alert("선택 항목을 삭제하였습니다.")
-                $(".analysis-items").html("")
-                let userData = {
-                    userId: Session.get('id'),
+        fetch("http://localhost:3001/account/jwt", {
+                method: 'post',
+                mode: 'cors',
+                headers: {
+                    'x-access-token': localStorage.token
                 }
-                $.ajax({
-                    url: 'http://localhost:3001/analysis/getAnalysisList',
-                    type: 'post',
-                    contentType: 'application/json',
-                    data: JSON.stringify(userData),
-                    success: function (data) {
-                        data.forEach(element => {
-                            let item = `
+        }).then(result => result.json())
+        .then(function (tokenData) {
+
+            let userData = {
+                _id: $(e.target).attr("id"),
+            }
+            console.log(userData);
+            $.ajax({
+                url: 'http://localhost:3001/analysis/deleteAnalysisList',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(userData),
+                success: function (data) {
+                    alert("선택 항목을 삭제하였습니다.")
+                    $(".analysis-items").html("")
+                    let userData = {
+                        userId: tokenData.id,
+                    }
+                    $.ajax({
+                        url: 'http://localhost:3001/analysis/getAnalysisList',
+                        type: 'post',
+                        contentType: 'application/json',
+                        data: JSON.stringify(userData),
+                        success: function (data) {
+                            data.forEach(element => {
+                                let item = `
                             <tr class="analysis-item" id="${element._id}">
-                                <td>${element.title}</td>
-                                <td>${element.date.substring(0,10)}</td>
+                                <td>${element.title} - ${element.date}</td>
+                                <td>${element.date.substring(0,9)}</td>
                                 <td><button alt=""  id="${element._id}" class="download-csv-analysis"></button></td>
                                 <td><button alt=""  id="${element._id}" class="download-pdf-analysis"></button></td>
                                 <td><button alt=""  id="${element._id}" class="download-json-analysis"></button></td>
@@ -304,11 +358,12 @@ Template.myAnalysis.events({
                                 <td><button alt=""  id="${element._id}" class="delete-analysis"></button></td>
                             </tr>
                             `
-                            $(".analysis-items").append(item)
-                        });
-                    }
-                })
-            }   
+                                $(".analysis-items").append(item)
+                            });
+                        }
+                    })
+                }
+            })
         })
     },
 
@@ -346,20 +401,29 @@ Template.myAnalysis.events({
 
 Template.myAnalysis.helpers({
     myLists: function () {
-        let userData = {
-            userId: Session.get('id'),
-        }
-        $.ajax({
-            url: 'http://localhost:3001/analysis/getAnalysisList',
-            type: 'post',
-            contentType: 'application/json',
-            data: JSON.stringify(userData),
-            success: function (data) {
-                data.forEach(element => {
-                    let item = `
+        fetch("http://localhost:3001/account/jwt", {
+                method: 'post',
+                mode: 'cors',
+                headers: {
+                    'x-access-token': localStorage.token
+                }
+        }).then(result => result.json())
+        .then(function (tokenData) {
+
+            let userData = {
+                userId: tokenData.id,
+            }
+            $.ajax({
+                url: 'http://localhost:3001/analysis/getAnalysisList',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(userData),
+                success: function (data) {
+                    data.forEach(element => {
+                        let item = `
                     <tr class="analysis-item" id="${element._id}">
-                        <td>${element.title}</td>
-                        <td>${element.date.substring(0,10)}</td>
+                        <td>${element.title} - ${element.date}</td>
+                        <td>${element.date.substring(0,9)}</td>
                         <td><button alt=""  dir="${element.dir}" class="download-csv-analysis"></button></td>
                         <td><button alt=""  dir="${element.dir}" class="download-pdf-analysis"></button></td>
                         <td><button alt=""  dir="${element.dir}" class="download-json-analysis"></button></td>
@@ -367,9 +431,10 @@ Template.myAnalysis.helpers({
                         <td><button alt=""  id="${element._id}" class="delete-analysis"></button></td>
                     </tr>
                     `
-                    $(".analysis-items").append(item)
-                });
-            }
+                        $(".analysis-items").append(item)
+                    });
+                }
+            })
         })
     }
 })
