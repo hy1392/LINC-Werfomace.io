@@ -1,31 +1,15 @@
 # Werformace.io
 
 ```sh
-@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+git clone https://github.com/hy1392/LINC-Werfomace.io.git
 
-choco install meteor
+cd LINC-Werformance.io
 
-meteor create <프로젝트명>
-```
+npm install
 
-github에서 pull받은 client, public, server 폴더를 <프로젝트명> 프로젝트 안으로 복사하여 덮어쓰기
-
-
-### meteor 패키지 설치
-```sh
-meteor add alexwine:bootstrap-4
-meteor add kadira:flow-router
-meteor add kadira:blaze-layout
-meteor add accounts-password
-meteor add themeteorchef:bert
-meteor npm install --save bcrypt
-meteor add rajit:bootstrap3-datepicker
-```
-
-### meteor 실행 및 확인
-```sh
 meteor
 ```
+
 localhost:3000에서 결과 확인
 
 ## 디렉터리 및 파일 구조

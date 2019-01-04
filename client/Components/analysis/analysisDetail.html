@@ -8,46 +8,61 @@
     </div>
     <div class="overall-analysis-container analysis-tabs analysis-tab-1">
       <div>
-        <div>종합 분석 결과</div>
-        <p>최근 동일한 도메인에 대한 최대 10건의 종합 분석 결과를 확인할 수 있습니다.</p>
+        <p class="analysisDetail-desc" style="font-size:14px">최근 동일한 도메인에 대한 최대 10건의 종합 분석 결과를 확인할 수 있습니다.</p>
         <div>
           <div style="width:598px; height:198px; display:inline-block; border:1px solid #eee; padding:8px">
             <canvas class="overall" width="598" height="198"></canvas>
           </div>
           <div style="width:294px; height:198px; display:flex; border:1px solid #eee; float:right; align-items: center; justify-content: center">
             <div  style="text-align:center">
-              <p >종합 평가</p>
-              <p class="overall-grade"></p>
-              <p class="overall-score"></p>
+              <p  style="font-weight:bold; font-size:24px">종합 평가</p>
+              <p class="overall-grade"  style="font-weight:bold; font-size:48px"></p>
+              <p class="overall-score"  style="font-weight:bold"></p>
             </div>
           </div>
-          <p>성능(Performane) 추이</p>
+          <p style="font-weight:bold" class="analysisDetail-title">성능(Performane) 추이</p>
           <div class="performance-detail" style="width:900px; height:200px; border: 1px solid #eee; padding:8px">
               <canvas class="overall-performance" width="598" height="130"></canvas>
           </div>
-          <p>성능(Performance)는 실제 웝 어플리케이션이 사용자에게 제공되는데 까지 소요되는 시간에 대한 점수입니다. 화면에 첫 요소가 생성될 때 까지 걸리는 시간, 화면에 전체 요소가 렌더링되는 데에 소요되는 시간 등 주로 사용자에게 직접적으로 보여지는 부분에 대한 평가를 진행합니다.</p>
-          <p>프로그레시브 웹 앱(Progressive Web App) 추이</p>
+          <p class="analysisDetail-desc">성능(Performance)은 사용자가 웹 어플리케이션을 방문하였을 떄 요소들이 제공되는 속도에 대한 평가 점수입니다. 첫 번째 요소 출력(First Contentful Paint), 첫 번째 의미있는 요소 출력(First Meaningful Paint), 첫 번째 CPU 유휴 상태(First CPU Idle), 웹 페이지 반응에 소요되는 시간(Time to Interactive), 속도 지수(Speed Index), 예상 입력 대기 시간(Estimated Input Latency)를 기반으로 점수를 산출합니다.</p>
+          <p style="font-weight:bold" class="analysisDetail-title">프로그레시브 웹 앱(Progressive Web App) 추이</p>
           <div class="pwa-detail" style="width:900px; height:200px; border: 1px solid #eee; padding:8px">
             <canvas class="overall-pwa" width="598" height="130"></canvas>
           </div>
-          <p>성능(Performance)는 실제 웝 어플리케이션이 사용자에게 제공되는데 까지 소요되는 시간에 대한 점수입니다. 화면에 첫 요소가 생성될 때 까지 걸리는 시간, 화면에 전체 요소가 렌더링되는 데에 소요되는 시간 등 주로 사용자에게 직접적으로 보여지는 부분에 대한 평가를 진행합니다.</p>
-          <p>접근성(Accessbility) 추이</p>
+            <p class="analysisDetail-desc">프로그래시브 웹 앱(Progressive Web App)은 모바일 앱과 같은 웹을 지향하는가에 대한 평가 점수입니다. 점수는 14 가지 요구 사항을 정의한 구글(Google)의 PWA 체크리스트를 기반으로 산출됩니다. PWA 체크리스트에는 HTTPS 사용 여부, 오프라인 상태에서의 웹 동작 여부, 홈 화면에 추가 기능 동작 여부, 3G 환경에서의 로딩 속도, cross-browsing 여부 등이 포함됩니다.</p>
+          <p style="font-weight:bold" class="analysisDetail-title">접근성(Accessbility) 추이</p>
           <div class="accessbility-detail" style="width:900px; height:200px; border: 1px solid #eee; padding:8px">
             <canvas class="overall-accessbility" width="598" height="130"></canvas>
           </div>
-          <p>성능(Performance)는 실제 웝 어플리케이션이 사용자에게 제공되는데 까지 소요되는 시간에 대한 점수입니다. 화면에 첫 요소가 생성될 때 까지 걸리는 시간, 화면에 전체 요소가 렌더링되는 데에 소요되는 시간 등 주로 사용자에게 직접적으로 보여지는 부분에 대한 평가를 진행합니다.</p>
-          <p>모범 사례(Best Practices) 추이</p>
+          <p class="analysisDetail-desc">접근성(Accessbility)은 웹 어플리케이션을 사용하는데에 어려움이 있는 사용자들에 대한 지원 정도를 나타내는 평가 점수입니다. 시각장애우와 같은 사용자들이 스크린 리더를 통해 웹 어플리케이션을 사용할 수 있도록 image=alt, frame-title, button-name 등의 옵션을 각 태그에 추가하여 정보를 제공받을 수 있도록 해야 합니다.</p>
+          <p style="font-weight:bold" class="analysisDetail-title">모범 사례(Best Practices) 추이</p>
           <div class="best-practices-detail" style="width:900px; height:200px; border: 1px solid #eee; padding:8px">
             <canvas class="overall-best-practices" width="598" height="130"></canvas>
           </div>
-          <p>성능(Performance)는 실제 웝 어플리케이션이 사용자에게 제공되는데 까지 소요되는 시간에 대한 점수입니다. 화면에 첫 요소가 생성될 때 까지 걸리는 시간, 화면에 전체 요소가 렌더링되는 데에 소요되는 시간 등 주로 사용자에게 직접적으로 보여지는 부분에 대한 평가를 진행합니다.</p>
-          <p>검색 엔진 최적화(Search Engine Optimization) 추이</p>
+          <p class="analysisDetail-desc">모범 사례(Best Practices)는 웹 어플리케이션이 최신 기술들을 적용하고 있는지에 대한 평가 점수 입니다. appcache-manifest, websql 등 지원이 중단된 기능 및 API의 사용을 지양해야 하며, https, http2와 같은 보안이 강화된 기술을 사용해야 합니다.</p>
+          <p style="font-weight:bold" class="analysisDetail-title">검색 엔진 최적화(Search Engine Optimization) 추이</p>
           <div class="seo-detail" style="width:900px; height:200px; border: 1px solid #eee; padding:8px">
             <canvas class="overall-seo" width="598" height="130"></canvas>
           </div>
-          <p>성능(Performance)는 실제 웝 어플리케이션이 사용자에게 제공되는데 까지 소요되는 시간에 대한 점수입니다. 화면에 첫 요소가 생성될 때 까지 걸리는 시간, 화면에 전체 요소가 렌더링되는 데에 소요되는 시간 등 주로 사용자에게 직접적으로 보여지는 부분에 대한 평가를 진행합니다.</p>
+          <p class="analysisDetail-desc">검색 엔진 최적화(Search Engine Optimization)는 검색 엔진이 웹 어플리케이션에 대한 올바른 정보를 인식하여 검색 결과로서 제공하기 위해 적합도를 측정하는 평가 점수 입니다. 검색 엔진 최적화를 위해서는 HTTPS 프로토콜을 사용해야 하며, Title, Meta Description, Meta Tag를 이용해 페이지에 대한 올바른 정보를 제공해야 합니다.</p>
         </div>
-        
+      </div>
+    </div>
+    <div class="analysis-container analysis-tabs analysis-tab-2" style="display:none">
+      <div class="performance-list">
+        <p class="analysisDetail-title">성능(Performance) 체크리스트</p>
+      </div>
+      <div class="pwa-list">
+        <p class="analysisDetail-title">프로그레시브 웹 앱(Progressive Web App) 체크리스트</p>
+      </div>
+      <div class="accessbility-list">
+        <p class="analysisDetail-title">접근성(Accessbility) 체크리스트</p>
+      </div>
+      <div class="best-practices-list">
+        <p class="analysisDetail-title">모범 사례(Best Practices) 체크리스트</p>
+      </div>
+      <div class="seo-list">
+        <p class="analysisDetail-title">검색 엔진 최적화(Search Engine Optimization) 체크리스트</p>
       </div>
     </div>
     <div class="analysis-container analysis-tabs analysis-tab-3" style="display:none">

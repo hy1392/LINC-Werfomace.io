@@ -273,7 +273,7 @@ Template.analysisDetail.rendered = function(){
         _id: FlowRouter.current().params.dataId
     }
     console.log(userData)
-    $(".analysis-container").html(`<iframe src="http://localhost:3001/analysis/getAnalysis/${userData._id}" frameborder="0" width="100%" height="2500px"></iframe>`)
+    $(".analysis-tab-3").html(`<iframe src="http://localhost:3001/analysis/getAnalysis/${userData._id}" frameborder="0" width="100%" height="2500px"></iframe>`)
     $.ajax({
         url: 'http://localhost:3001/analysis/getHistory',
         type: 'post',
@@ -336,11 +336,12 @@ Template.analysisDetail.rendered = function(){
                 },
                 options: {
                     scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
+                        ticks: {
+                            beginAtZero: true,
+                            steps: 20,
+                            stepValue: 5,
+                            max: 100
+                        }
                     },
                     legend:{
                         display:false
@@ -384,13 +385,19 @@ Template.analysisDetail.rendered = function(){
                     datasets: [{
                         label: 'Score',
                         data: data,
+                        fill:false,
+                        borderColor: 'rgba(54,162,235,0.5)',
+                        backgroundColor: 'rgba(54,162,235,0.7)',
                     }]
                 },
                 options: {
                     scales: {
                         yAxes: [{
                             ticks: {
-                                beginAtZero: true
+                                beginAtZero: true,
+                                steps: 20,
+                                stepValue: 5,
+                                max: 100
                             }
                         }]
                     },
@@ -403,14 +410,96 @@ Template.analysisDetail.rendered = function(){
                         } catch (error) {
                             
                         }
-                    }
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
                 },
-                scaleOverride: true,
-                scaleSteps: 10,
-                scaleStepWidth: 10,
-                scaleStartValue: 0
             })
             })
+
+            $.ajax({
+                url: 'http://localhost:3001/analysis/getDetail',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(userData),
+                success: function (data) {
+                    console.log(data)
+                    data.forEach(element => {
+                        let target
+                        switch(element.category){
+                            case "Performance": target = '.performance-list'; break;
+                            case "Progressive Web App": target = '.pwa-list'; break;
+                            case "Accessibility": target = '.accessbility-list'; break;
+                            case "Best Practices": target = '.best-practices-list'; break;
+                            case "SEO": target = '.seo-list'; break;
+                        }
+                        let shape, color, graphColor
+                        if(element.type == "numeric"){
+                            if (element.score * 100 >= 90) color = 'rgba(23,130,57,0.3)'
+                            else if (element.score * 100 >= 50) color = 'rgba(230,119,0,0.3)'
+                            else color = 'rgba(199,34,31,0.3)'
+                            if (element.score * 100 >= 90) graphColor = 'rgba(23,130,57,1)'
+                            else if (element.score * 100 >= 50) graphColor = 'rgba(230,119,0,1)'
+                            else graphColor = 'rgba(199,34,31,1)'
+                            shape = `<div class="list-item" style="background:${color}">
+                                <p class="analysisDetail-list-title">${element.name}</p>
+                                <button class="analysisDetail-btn" type="button" data-toggle="collapse" data-target="#${element.name}" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    V
+                                </button>
+                                <div class="progress analysisDetail-progress">
+                                    <div class="progress-bar" role="progressbar" style="width: ${element.score*100}%; background:${graphColor}" aria-valuenow="${element.score*100}" aria-valuemin="0" aria-valuemax="100">${element.score*100}</div>
+                                </div>
+                                </div>
+                                <div class="collapse" id="${element.name}">
+                                <p class="collapse-desc" id="${element.name}-desc"></p>
+                            </div>`
+                            $(target).append(shape)
+                            let desc = `#${element.name}-desc`
+                            $(desc).html(element.title)
+                        }
+                        else{
+                            if (element.score == 1) color = 'rgba(23,130,57,0.3)'
+                            else color = 'rgba(199,34,31,0.3)'
+                            shape = `<div class="list-item" style="background:${color}">
+                                <p class="analysisDetail-list-title">${element.name}</p>
+                                <button class="analysisDetail-btn" type="button" data-toggle="collapse" data-target="#${element.name}" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    V
+                                </button>
+                                </div>
+                               <div class="collapse" id="${element.name}">
+                                <p class="collapse-desc" id="${element.name}-desc"></p>
+                            </div>`
+                            $(target).append(shape)
+                            let desc = `#${element.name}-desc`
+                            let desc_text = element.title
+                            $(desc).text(desc_text.replace(/`/gi, '"'))
+                        }
+                    });
+                }
+            })
+
+            // fetch("http://localhost:3001/account/jwt", {
+            //     method: 'post',
+            //     mode: 'cors',
+            //     headers: {
+            //         'x-access-token': localStorage.token
+            //     }
+            // }).then(result => result.json())
+            // .then(function (tokenData) {
+            //     console.log(tokenData)
+            //     if (tokenData.tier == "free") {
+            //         let tabs = $(".analysisDetail-tabs").toArray()
+            //         tabs.forEach(element => {
+            //             $(element).css("display", "none")
+            //         });
+            //         $(".analysis-tab-2").html("")
+            //         $(".analysis-tab-3").html("")
+            //     }
+            // })
         }
     })
 }

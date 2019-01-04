@@ -14,3 +14,51 @@
     border-left: 1px solid #eee;
     border-bottom: none !important;
 }
+
+.analysisDetail-title {
+    margin: 16px 0;
+    padding: 4px;
+    font-size: 18px;
+    font-weight:bold;
+}
+
+.analysisDetail-desc{
+    margin: 8px 0;
+    padding: 4px;
+    font-size: 14px;
+}
+
+.analysisDetail-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    float:right;
+    padding: 11px;
+}
+
+.analysisDetail-list-title{
+    margin: 4px 0;
+    display: inline-block;
+    font-size: 16px;
+    padding: 4px 16px;
+}
+
+.collapse-desc{
+    margin: 0;
+    padding: 6px 24px;
+    background: #eee;
+    font-size: 12px;
+}
+
+.list-item{
+    border: 1px solid #eee;
+    margin: 4px 0 0 0;
+}
+
+.analysisDetail-progress{
+    width: 200px;
+    height: 10px;
+    display: inline-flex;
+    float: right;
+    margin: 15px;
+}
