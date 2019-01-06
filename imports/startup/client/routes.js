@@ -48,6 +48,7 @@ FlowRouter.route('/findPw', {
 FlowRouter.route('/analysisDetail/:dataId', {
     action: function() {
     checkLoginStatus()
+    BlazeLayout.reset()
     BlazeLayout.render('defaultTemplate', {header:'mainTopBar', main:'analysisDetail',  footer:'mainFooter'});
   }
 });
