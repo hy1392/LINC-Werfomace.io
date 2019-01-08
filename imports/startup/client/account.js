@@ -103,6 +103,7 @@ if(Meteor.isClient){
 
     Template.register.events({
     'click .rg-btn': function(event) {
+        let startTile = new Date()
         event.preventDefault();
         if ($("#rg_user_pass").val() === $("#rg_user_pass_check").val()) {
             let userData = {
@@ -121,12 +122,15 @@ if(Meteor.isClient){
                 contentType: 'application/json',
                 data: JSON.stringify(userData),
                 success: function (data) {
+                    let endTime = new Date()
+                    console.log(`${endTime-startTile} ms`)
                     if (data == "success") {
                         alert("회원가입이 완료되었습니다.")
                         FlowRouter.go('/');
                     } else if (data.code == 11000) {
                         alert("이미 등록된 아이디입니다.")
                     }
+                    
                 }
             })
         } else {
@@ -419,6 +423,7 @@ Template.analysisDetail.rendered = function(){
             })
             })
 
+            let startTime = new Date()
             $.ajax({
                 url: 'http://localhost:3001/analysis/getDetail',
                 type: 'post',
@@ -479,6 +484,8 @@ Template.analysisDetail.rendered = function(){
                             $(desc).text(desc_text.replace(/`/gi, '"'))
                         }
                     });
+                    let endTime = new Date()
+                    console.log(`${endTime-startTime} ms`)
                 }
             })
 

@@ -2,8 +2,11 @@ import {Session} from 'meteor/session';
 //default
 FlowRouter.route('/', {
     action: function() {
+    let startTime = new Date()
     checkLoginStatus()
     BlazeLayout.render('defaultTemplate', {header:'mainTopBar', main:'index',  footer:'mainFooter'});
+    let endTime = new Date()
+    console.log(`${endTime-startTime} ms`)
   },
 });
 
