@@ -1,4 +1,7 @@
 import {Session} from 'meteor/session';
+import server from '../../../config/server'
+
+const api_server = server.url;
 //default
 FlowRouter.route('/', {
     action: function() {
@@ -89,7 +92,7 @@ FlowRouter.route('/myInfo', {
 });
 
 function checkJWT(){
-  fetch("http://localhost:3001/account/jwt", {
+  fetch(api_server+"/account/jwt", {
       method: 'post',
       mode: 'cors',
       headers: {
@@ -108,7 +111,7 @@ function checkJWT(){
 
 function checkLoginStatus() {
   if(localStorage.token){
-      fetch("http://localhost:3001/account/jwt", {
+      fetch(api_server+"/account/jwt", {
           method: 'post',
           mode: 'cors',
           headers: {

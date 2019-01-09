@@ -1,13 +1,78 @@
 import { Meteor } from 'meteor/meteor';
 import {Session} from 'meteor/session';
 import Chart from 'chart.js';
+import server from '../../../config/server'
+
+const api_server = server.url;
 
 if(Meteor.isClient){
     Template.registerHelper('check_session', function(){
         return Session.get('status')
     })
     Template.modifyMyInfo.onRendered( function() {
-        fetch("http://localhost:3001/account/jwt", {
+
+        paypal.Button.render({
+
+            // Set your environment
+
+            env: 'sandbox', // sandbox | production
+
+            // Specify the style of the button
+
+            style: {
+                label: 'pay',
+                size: 'small', // small | medium | large | responsive
+                shape: 'pill', // pill | rect
+                color: 'gold' // gold | blue | silver | black
+            },
+
+            // PayPal Client IDs - replace with your own
+            // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+
+            client: {
+                sandbox: 'AVaQNXrCC7u02TrhfCqpISfdkqnms1djVoTlLwtnHc4URRkCnNkmhxe7-Wwunn2olCwPurGC3_9AmEd_'
+            },
+
+            payment: function (data, actions) {
+                return actions.payment.create({
+                    payment: {
+                        transactions: [{
+                            amount: {
+                                total: '10',
+                                currency: 'USD'
+                            }
+                        }]
+                    }
+                });
+            },
+
+            onAuthorize: function (data, actions) {
+                return actions.payment.execute().then(function () {
+                    let userData = {
+                        id: $("#m_user_id").val(),
+                    }
+                    console.log(userData);
+                    $.ajax({
+                        url: api_server+'/account/updateTier',
+                        type: 'post',
+                        contentType: 'application/json',
+                        data: JSON.stringify(userData),
+                        success: function (data) {
+                            console.log(data)
+                            if (data.code == "success") {
+                                localStorage.token = data.token
+                                alert("결제가 완료되었습니다.")
+                                FlowRouter.go("/")
+                            }
+                        }
+                    })
+                });
+            }
+
+        }, '#paypal-button-container');
+
+
+        fetch(api_server+"/account/jwt", {
                 method: 'post',
                 mode: 'cors',
                 headers: {
@@ -19,7 +84,7 @@ if(Meteor.isClient){
                     id : tokenData.id
                 }
                 $.ajax({
-                    url: 'http://localhost:3001/account/getUser',
+                    url: api_server+'/account/getUser',
                     type: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify(currentUser),
@@ -82,7 +147,7 @@ if(Meteor.isClient){
                 }
                 console.log(userData);
                 $.ajax({
-                    url: 'http://localhost:3001/account/update',
+                    url: api_server+'/account/update',
                     type: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify(userData),
@@ -122,7 +187,7 @@ if(Meteor.isClient){
             }
             console.log(userData);
             $.ajax({
-                url: 'http://localhost:3001/account/register',
+                url: api_server+'/account/register',
                 type: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify(userData),
@@ -172,7 +237,7 @@ Template.login.events({
         }
         console.log(userData);
         $.ajax({
-            url: 'http://localhost:3001/account/login',
+            url: api_server+'/account/login',
             type: 'post',
             contentType: 'application/json',
             data: JSON.stringify(userData),
@@ -198,7 +263,7 @@ Template.findId.events({
         }
         console.log(userData);
         $.ajax({
-            url: 'http://localhost:3001/account/findId',
+            url: api_server+'/account/findId',
             type: 'post',
             contentType: 'application/json',
             data: JSON.stringify(userData),
@@ -223,7 +288,7 @@ Template.findPw.events({
         }
         console.log(userData);
         $.ajax({
-            url: 'http://localhost:3001/account/findPw',
+            url: api_server+'/account/findPw',
             type: 'post',
             contentType: 'application/json',
             data: JSON.stringify(userData),
@@ -245,7 +310,7 @@ Template.index.events({
             alert("분석을 진행할 사이트의 주소를 입력해 주세요(ex. https://www.google.com")
             return
         }
-        fetch("http://localhost:3001/account/jwt", {
+        fetch(api_server+"/account/jwt", {
                 method: 'post',
                 mode: 'cors',
                 headers: {
@@ -266,7 +331,7 @@ Template.index.events({
                 console.log(userData);
                 $(".loader-container").show()
                 $.ajax({
-                    url: 'http://localhost:3001/analysis',
+                    url: api_server+'/analysis',
                     type: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify(userData),
@@ -284,9 +349,9 @@ Template.analysisDetail.rendered = function(){
         _id: FlowRouter.current().params.dataId
     }
     console.log(userData)
-    $(".analysis-tab-3").html(`<iframe src="http://localhost:3001/analysis/getAnalysis/${userData._id}" frameborder="0" width="100%" height="2500px"></iframe>`)
+    $(".analysis-tab-3").html(`<iframe src="${api_server}/analysis/getAnalysis/${userData._id}" frameborder="0" width="100%" height="2500px"></iframe>`)
     $.ajax({
-        url: 'http://localhost:3001/analysis/getHistory',
+        url: api_server+'/analysis/getHistory',
         type: 'post',
         contentType: 'application/json',
         data: JSON.stringify(userData),
@@ -430,7 +495,7 @@ Template.analysisDetail.rendered = function(){
 
             let startTime = new Date()
             $.ajax({
-                url: 'http://localhost:3001/analysis/getDetail',
+                url: api_server+'/analysis/getDetail',
                 type: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify(userData),
@@ -495,7 +560,7 @@ Template.analysisDetail.rendered = function(){
             })
 
             //결제 등급 검증
-            fetch("http://localhost:3001/account/jwt", {
+            fetch(api_server+"/account/jwt", {
                 method: 'post',
                 mode: 'cors',
                 headers: {
@@ -529,7 +594,7 @@ Template.analysisDetail.events({
 
 Template.myInfo.events({
     'click .c-p-btn': function (event) {
-        fetch("http://localhost:3001/account/jwt", {
+        fetch(api_server+"/account/jwt", {
             method:'post',
             mode: 'cors',
             headers: {
@@ -544,7 +609,7 @@ Template.myInfo.events({
             }
             console.log(userData);
             $.ajax({
-                url: 'http://localhost:3001/account/checkPw',
+                url: api_server+'/account/checkPw',
                 type: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify(userData),
@@ -567,7 +632,7 @@ Template.myInfo.events({
 
 Template.myAnalysis.events({
     'click .delete-analysis': function(e){
-        fetch("http://localhost:3001/account/jwt", {
+        fetch(api_server+"/account/jwt", {
                 method: 'post',
                 mode: 'cors',
                 headers: {
@@ -581,7 +646,7 @@ Template.myAnalysis.events({
             }
             console.log(userData);
             $.ajax({
-                url: 'http://localhost:3001/analysis/deleteAnalysisList',
+                url: api_server+'/analysis/deleteAnalysisList',
                 type: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify(userData),
@@ -592,7 +657,7 @@ Template.myAnalysis.events({
                         userId: tokenData.id,
                     }
                     $.ajax({
-                        url: 'http://localhost:3001/analysis/getAnalysisList',
+                        url: api_server+'/analysis/getAnalysisList',
                         type: 'post',
                         contentType: 'application/json',
                         data: JSON.stringify(userData),
@@ -630,7 +695,7 @@ Template.myAnalysis.events({
             dir: $(e.target).attr("dir"),
             type:"csv"
         }
-        window.open(`http://localhost:3001/analysis/getFile/${userData.dir}/${userData.type}`)
+        window.open(api_server+`/analysis/getFile/${userData.dir}/${userData.type}`)
     },
 
     'click .download-json-analysis': function (e) {
@@ -638,7 +703,7 @@ Template.myAnalysis.events({
             dir: $(e.target).attr("dir"),
             type: "json"
         }
-        window.open(`http://localhost:3001/analysis/getFile/${userData.dir}/${userData.type}`)
+        window.open(api_server+`/analysis/getFile/${userData.dir}/${userData.type}`)
     },
 
     'click .download-pdf-analysis': function (e) {
@@ -646,13 +711,13 @@ Template.myAnalysis.events({
             dir: $(e.target).attr("dir"),
             type: "pdf"
         }
-        window.open(`http://localhost:3001/analysis/getFile/${userData.dir}/${userData.type}`)
+        window.open(api_server+`/analysis/getFile/${userData.dir}/${userData.type}`)
     },
 })
 
 Template.myAnalysis.helpers({
     myLists: function () {
-        fetch("http://localhost:3001/account/jwt", {
+        fetch(api_server+"/account/jwt", {
                 method: 'post',
                 mode: 'cors',
                 headers: {
@@ -665,7 +730,7 @@ Template.myAnalysis.helpers({
                 userId: tokenData.id,
             }
             $.ajax({
-                url: 'http://localhost:3001/analysis/getAnalysisList',
+                url: api_server+'/analysis/getAnalysisList',
                 type: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify(userData),
