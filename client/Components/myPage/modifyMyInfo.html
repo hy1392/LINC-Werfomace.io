@@ -1,4 +1,5 @@
 <template name="modifyMyInfo">
+
 	<div>
 		<p class="page-title find-modifyMyInfo-text">개인정보 수정/조회</p>
 	</div>
@@ -41,7 +42,8 @@
 
 		<div class="m_wrap_3-1 clearfix">
 			<input type="email" id="m_user_grade" value="{{get_tier}}" disabled>
-			<button type="button" class="m_pay_btn">결제하기</button>
+			<div id="paypal-button-container" style="display:inline-block"></div>
+			<!-- <button type="button" class="m_pay_btn">결제하기</button> -->
 		</div>
 
 		<button type="button" class="default-btn m_btn">개인정보수정</button>
@@ -54,4 +56,66 @@
 			});
 		})
 	</script>
+<script>
+	// Render the PayPal button
+
+	paypal.Button.render({
+
+		// Set your environment
+
+		env: 'sandbox', // sandbox | production
+
+		// Specify the style of the button
+
+		style: {
+			label: 'pay',
+			size: 'small', // small | medium | large | responsive
+			shape: 'pill', // pill | rect
+			color: 'gold' // gold | blue | silver | black
+		},
+
+		// PayPal Client IDs - replace with your own
+		// Create a PayPal app: https://developer.paypal.com/developer/applications/create
+
+		client: {
+			sandbox: 'AVaQNXrCC7u02TrhfCqpISfdkqnms1djVoTlLwtnHc4URRkCnNkmhxe7-Wwunn2olCwPurGC3_9AmEd_'
+		},
+
+		payment: function (data, actions) {
+			return actions.payment.create({
+				payment: {
+					transactions: [{
+						amount: {
+							total: '10',
+							currency: 'USD'
+						}
+					}]
+				}
+			});
+		},
+
+		onAuthorize: function (data, actions) {
+			return actions.payment.execute().then(function () {
+				let userData = {
+                    id: $("#m_user_id").val(),
+                }
+                console.log(userData);
+                $.ajax({
+                    url: 'http://localhost:3001/account/updateTier',
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify(userData),
+                    success: function (data) {
+                        console.log(data)
+                        if(data.code == "success"){
+                            alert("결제가 완료되었습니다.")
+                            FlowRouter.go("/")
+                        }
+                    }
+                })
+			});
+		}
+
+	}, '#paypal-button-container');
+</script>
 </template>

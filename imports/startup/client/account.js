@@ -33,6 +33,11 @@ if(Meteor.isClient){
                             email: data.email,
                             tier: data.tier
                         })
+                        if (Session.get("tier") == "paid") {
+                            $("#paypal-button-container").html("")
+                            $("#paypal-button-container").css("display","none")
+                            $("#m_user_grade").css("width", "440px")
+                        }
                     }
                 })
             })
@@ -489,24 +494,25 @@ Template.analysisDetail.rendered = function(){
                 }
             })
 
-            // fetch("http://localhost:3001/account/jwt", {
-            //     method: 'post',
-            //     mode: 'cors',
-            //     headers: {
-            //         'x-access-token': localStorage.token
-            //     }
-            // }).then(result => result.json())
-            // .then(function (tokenData) {
-            //     console.log(tokenData)
-            //     if (tokenData.tier == "free") {
-            //         let tabs = $(".analysisDetail-tabs").toArray()
-            //         tabs.forEach(element => {
-            //             $(element).css("display", "none")
-            //         });
-            //         $(".analysis-tab-2").html("")
-            //         $(".analysis-tab-3").html("")
-            //     }
-            // })
+            //결제 등급 검증
+            fetch("http://localhost:3001/account/jwt", {
+                method: 'post',
+                mode: 'cors',
+                headers: {
+                    'x-access-token': localStorage.token
+                }
+            }).then(result => result.json())
+            .then(function (tokenData) {
+                console.log(tokenData)
+                if (tokenData.tier == "free") {
+                    let tabs = $(".analysisDetail-tabs").toArray()
+                    tabs.forEach(element => {
+                        $(element).css("display", "none")
+                    });
+                    $(".analysis-tab-2").html("")
+                    $(".analysis-tab-3").html("")
+                }
+            })
         }
     })
 }
