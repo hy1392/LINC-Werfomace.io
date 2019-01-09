@@ -108,6 +108,7 @@
                     success: function (data) {
                         console.log(data)
                         if(data.code == "success"){
+							localStorage.token = data.token
                             alert("결제가 완료되었습니다.")
                             FlowRouter.go("/")
                         }
